@@ -1,0 +1,78 @@
+@extends('admin.layouts.app')
+@section('style')
+@endsection
+@section('content')
+<div class="content-wrapper">
+
+	 
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Notifications</h1>
+          </div>
+          <div class="col-sm-6" style="text-align: right;">
+            
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+      
+      
+          <div class="col-md-12">
+
+            @include('admin.layouts._message')
+
+
+    
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Notifications</h3>
+              </div>
+            
+              <div class="card-body p-0">
+                <table class="table table-striped">
+                 
+                  <tbody>
+                    @foreach($getRecord as $value)
+                     <tr>
+                      <td>
+                        <a style="color: #000; {{ empty($value->is_read) ? 'font-weight:bold' : ''  }} " href="{{ $value->url }}?noti_id={{ $value->id }}">
+                            {{ $value->message }}
+                        </a>
+
+                        <div>
+                            <small>{{ date('d-m-Y h:i A', strtotime($value->created_at)) }}</small>
+                        </div>
+                      </td>
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+
+                <div style="padding: 10px; float: right;">
+                    {!! $getRecord->appends(Illuminate\Support\Facades\Request::except('page'))->links() !!}
+                </div>
+
+              </div>
+            </div>
+          </div>
+      
+        </div>
+       
+      </div>
+    </section>
+    
+
+
+</div>
+
+@endsection
+
+@section('script')
+
+@endsection
