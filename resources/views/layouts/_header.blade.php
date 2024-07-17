@@ -1,36 +1,26 @@
 <header class="header">
     <div class="header-top">
         <div class="container">
-            <div class="header-left">
 
-                <div class="header-dropdown">
-                    <a href="#">Eng</a>
-                    <div class="header-menu">
-                        <ul>
-                            <li><a href="#">English</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
 
             <div class="header-right">
                 <ul class="top-menu">
                     <li>
                         <a href="#">Links</a>
                         <ul>
-                            <li><a href="tel:{{ $getSystemSettingApp->phone }}"><i class="icon-phone"></i>Call: {{ $getSystemSettingApp->phone }}</a></li>
+                            <li><a href="tel:{{ $getSystemSettingApp->phone }}">Call: {{ $getSystemSettingApp->phone }}</a></li>
                             @if(!empty(Auth::check()))
-                                <li><a href="{{ url('my-wishlist') }}"><i class="icon-heart-o"></i>My Wishlist</a></li>
+                                <li><a href="{{ url('my-wishlist') }}">My Wishlist</a></li>
                             @else
-                                <li><a href="#signin-modal" data-toggle="modal"><i class="icon-heart-o"></i>My Wishlist</a></li>
+                                <li><a href="#signin-modal" data-toggle="modal"></i>My Wishlist</a></li>
                             @endif
 
                             <li><a href="{{ url('about') }}">About Us</a></li>
                             <li><a href="{{ url('contact') }}">Contact Us</a></li>
                             @if(!empty(Auth::check()))
-                                <li><a href="{{ url('user/dashboard') }}"><i class="icon-user"></i> {{ Auth::user()->name }}</a></li>
+                                <li><a href="{{ url('user/dashboard') }}"></i> {{ Auth::user()->name }}</a></li>
                             @else
-                                <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
+                                <li><a href="#signin-modal" data-toggle="modal"></i>Login</a></li>
                             @endif
 
                         </ul>
@@ -45,11 +35,11 @@
             <div class="header-left">
                 <button class="mobile-menu-toggler">
                     <span class="sr-only">Toggle mobile menu</span>
-                    <i class="icon-bars"></i>
+                    <p>Menu</p>
                 </button>
 
                 <a href="{{ url('') }}" class="logo">
-                    <img src="{{ $getSystemSettingApp->getLogo() }}" alt="" width="105" height="25">
+                    <h3>TechHUB</h3>
                 </a>
 
                 <nav class="main-nav">
@@ -58,7 +48,7 @@
                             <a href="{{ url('') }}">Home</a>
                         </li>
                         <li>
-                            <a href="javascript:;" class="sf-with-ul">Shop</a>
+                            <a href="javascript:;" class="">Shop</a>
                             <div class="megamenu megamenu-md">
                                 <div class="row no-gutters">
                                     <div class="col-md-12">
@@ -99,7 +89,7 @@
 
             <div class="header-right">
                 <div class="header-search">
-                    <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
+                    <a href="#" class="search-toggle" role="button" title="Search"><p>Search</p></a>
                     <form action="{{ url('search') }}" method="get">
                         <div class="header-search-wrapper">
                             <label for="q" class="sr-only">Search</label>
@@ -110,7 +100,7 @@
 
                 <div class="dropdown cart-dropdown">
                     <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                        <i class="icon-shopping-cart"></i>
+                        <p>Cart</p>
                         <span class="cart-count">{{ Cart::getContent()->count() }}</span>
                     </a>
                     @if(!empty(Cart::getContent()->count()))
@@ -145,7 +135,7 @@
                                             <img src="{{ $getProductImage->getLogo() }}" alt="product">
                                         </a>
                                     </figure>
-                                    <a href="{{ url('cart/delete/'.$header_cart->id) }}" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                    <a href="{{ url('cart/delete/'.$header_cart->id) }}" class="btn-remove" title="Remove Product"></a>
                                     </div>
                                     @endif
                                 @endforeach
@@ -159,7 +149,7 @@
 
                             <div class="dropdown-cart-action">
                                 <a href="{{ url('cart') }}" class="btn btn-primary">View Cart</a>
-                                <a href="{{ url('checkout') }}" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                                <a href="{{ url('checkout') }}" class="btn btn-outline-primary-2"><span>Checkout</span></a>
                             </div>
                         </div>
                     @endif

@@ -43,7 +43,7 @@
                                         <img src="{{ $image->getLogo() }}" alt="product side">
                                     </a>
                                     @endforeach
-                                     
+
 
                                     </div><!-- End .product-image-gallery -->
                                 </div><!-- End .product-gallery -->
@@ -60,7 +60,7 @@
                                     </div>
 
                                     <div class="product-price">
-                                        $<span id="getTotalPrice">{{ number_format($getProduct->price, 2) }}</span>
+                                        Ksh <span id="getTotalPrice">{{ number_format($getProduct->price, 2) }}</span>
                                     </div><!-- End .product-price -->
 
                                     <div class="product-content">
@@ -84,7 +84,7 @@
                                         </div>
                                     @endif
 
-                                    
+
                                     @if(!empty($getProduct->getSize->count()))
                                     <div class="details-filter-row details-row-size">
                                         <label for="size">Size:</label>
@@ -92,7 +92,7 @@
                                             <select name="size_id" id="size" required class="form-control getSizePrice">
                                                 <option data-price="0" value="">Select a size</option>
                                                  @foreach($getProduct->getSize as $size)
-                                                    <option data-price="{{ !empty($size->price) ? $size->price : 0 }}" value="{{ $size->id }}">{{ $size->name }} @if(!empty($size->price)) (${{ number_format($size->price,2) }}) @endif</option>
+                                                    <option data-price="{{ !empty($size->price) ? $size->price : 0 }}" value="{{ $size->id }}">{{ $size->name }} @if(!empty($size->price)) (Ksh {{ number_format($size->price,2) }}) @endif</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -112,11 +112,11 @@
                                         <div class="details-action-wrapper">
                                             @if(!empty(Auth::check()))
                                                 <a href="javascript:;" class="add_to_wishlist add_to_wishlist{{ $getProduct->id }} {{ !empty($getProduct->checkWishlist($getProduct->id)) ? 'btn-wishlist-add' : '' }} btn-product btn-wishlist" title="Wishlist" id="{{ $getProduct->id }}"><span>Add to Wishlist</span></a>
-                                        
+
                                             @else
                                                 <a href="#signin-modal" data-toggle="modal" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
                                             @endif
-                                         
+
                                         </div>
                                     </div>
                             </form>
@@ -209,7 +209,7 @@
                                     @endforeach
 
                                      {!! $getReviewProduct->appends(Illuminate\Support\Facades\Request::except('page'))->links() !!}
-                                     
+
                                 </div><!-- End .container -->
                             </div><!-- End .reviews -->
                         </div><!-- .End .tab-pane -->
@@ -218,9 +218,9 @@
 
                 <div class="container">
                     <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
-                    <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                    <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
                         data-owl-options='{
-                            "nav": false, 
+                            "nav": false,
                             "dots": true,
                             "margin": 20,
                             "loop": false,
@@ -254,7 +254,7 @@
                                     <a href="{{ url($value->slug) }}">
                                         @if(!empty($getProductImage) && !empty($getProductImage->getLogo()))
                                           <img style="height: 280px;width: 100%;object-fit: cover;" src="{{ $getProductImage->getLogo() }}" alt="{{ $value->title }}" class="product-image">
-                                        @endif                                        
+                                        @endif
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -264,7 +264,7 @@
                                         @else
                                             <a href="#signin-modal" data-toggle="modal" class="btn-product-icon btn-wishlist btn-expandable" title="Wishlist"><span>add to wishlist</span></a>
                                         @endif
-                                        
+
                                     </div>
                                 </figure>
 
@@ -273,9 +273,9 @@
                                       <a href="{{ url($value->category_slug.'/'.$value->sub_category_slug) }}">{{ $value->sub_category_name }}</a>
                                     </div>
                                     <h3 class="product-title"><a href="{{ url($value->slug) }}">{{ $value->title }}</a></h3>
-                                    
+
                                     <div class="product-price">
-                                        ${{ number_format($value->price, 2) }}
+                                        Ksh {{ number_format($value->price, 2) }}
                                     </div>
                                     <div class="ratings-container">
                                         <div class="ratings">
@@ -283,7 +283,7 @@
                                         </div>
                                         <span class="ratings-text">( 2 Reviews )</span>
                                     </div>
-                                   
+
                                 </div>
                             </div>
 
@@ -295,22 +295,21 @@
         </main><!-- End .main -->
 
 
-@endsection      
+@endsection
 @section('script')
-    
+
     <script src="{{ url('assets/js/bootstrap-input-spinner.js') }}"></script>
     <script src="{{ url('assets/js/jquery.elevateZoom.min.js') }}"></script>
-    <script src="{{ url('assets/js/bootstrap-input-spinner.js') }}"></script>    
+    <script src="{{ url('assets/js/bootstrap-input-spinner.js') }}"></script>
 
     <script type="text/javascript">
-        $('.getSizePrice').change(function() {
+        Ksh ('.getSizePrice').change(function() {
             var prduct_price = '{{ $getProduct->price }}';
             var price = $('option:selected', this).attr('data-price');
             var total = parseFloat(prduct_price) + parseFloat(price);
-            $('#getTotalPrice').html(total.toFixed(2));            
+            Ksh ('#getTotalPrice').html(total.toFixed(2));
         });
     </script>
 
 @endsection
 
-    

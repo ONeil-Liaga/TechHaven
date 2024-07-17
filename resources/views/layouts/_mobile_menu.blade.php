@@ -8,11 +8,11 @@
             <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search in..." required>
             <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
         </form>
-        
+
         <nav class="mobile-nav">
             <ul class="mobile-menu">
                 <li class="active">
-                    <a href="{{ url('') }}">Home</a>                    
+                    <a href="{{ url('') }}">Home</a>
                 </li>
                 @php
                     $getCategoryMobile = App\Models\CategoryModel::getRecordMenu();
@@ -24,19 +24,14 @@
                             <ul>
                                 @foreach($value_m_c->getSubCategory as $value_m_sub)
                                       <li><a href="{{ url($value_m_c->slug.'/'.$value_m_sub->slug) }}">{{ $value_m_sub->name }}</a></li>
-                                @endforeach                        
+                                @endforeach
                             </ul>
                         </li>
                     @endif
-                @endforeach               
+                @endforeach
             </ul>
         </nav><!-- End .mobile-nav -->
 
-        <div class="social-icons">
-            <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
-            <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
-            <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
-            <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
-        </div><!-- End .social-icons -->
+        <!-- End .social-icons -->
     </div><!-- End .mobile-menu-wrapper -->
 </div><!-- End .mobile-menu-container -->
