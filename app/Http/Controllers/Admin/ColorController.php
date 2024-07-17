@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ColorModel;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 
 class ColorController extends Controller
 {
@@ -19,7 +19,7 @@ class ColorController extends Controller
     public function add()
     {
         $data['header_title'] = 'Add New Color';
-        return view('admin.color.add', $data);
+        return view('admin.color.add', $data);   
     }
 
     public function insert(Request $request)
@@ -32,20 +32,20 @@ class ColorController extends Controller
         $color->save();
 
         return redirect('admin/color/list')->with('success', "Color Successfully Created");
-
+        
     }
 
     public function edit($id)
     {
         $data['getRecord'] = ColorModel::getSingle($id);
         $data['header_title'] = 'Edit Color';
-        return view('admin.color.edit', $data);
+        return view('admin.color.edit', $data);  
     }
 
 
     public function update($id, Request $request)
     {
-
+    
         $color = ColorModel::getSingle($id);
         $color->name = trim($request->name);
         $color->code = trim($request->code);

@@ -9,7 +9,7 @@ use App\Models\ProductModel;
 use App\Models\ColorModel;
 use App\Models\BrandModel;
 use App\Models\ProductReviewModel;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 class ProductController extends Controller
 {
     public function my_wishlist()
@@ -29,13 +29,13 @@ class ProductController extends Controller
             $data['meta_title'] = 'Search';
             $data['meta_description'] = '';
             $data['meta_keywords'] = '';
-
+            
             $getProduct = ProductModel::getProduct();
             $page = 0;
-            if (!empty($getProduct->nextPageUrl()))
+            if (!empty($getProduct->nextPageUrl())) 
             {
                 $parse_url = parse_url($getProduct->nextPageUrl());
-                if (!empty($parse_url['query']))
+                if (!empty($parse_url['query'])) 
                 {
                     parse_str($parse_url['query'], $get_array);
                     $page = !empty($get_array['page']) ? $get_array['page'] : 0;
@@ -62,7 +62,7 @@ class ProductController extends Controller
         if(!empty($getProductSingle))
         {
             $data['meta_title']       = $getProductSingle->title;
-            $data['meta_description'] = $getProductSingle->short_description;
+            $data['meta_description'] = $getProductSingle->short_description;            
 
             $data['getProduct']       = $getProductSingle;
             $data['getRelatedProduct'] = ProductModel::getRelatedProduct($getProductSingle->id, $getProductSingle->sub_category_id);
@@ -81,16 +81,16 @@ class ProductController extends Controller
             $getProduct = ProductModel::getProduct($getCategory->id, $getSubCategory->id);
 
             $page = 0;
-            if (!empty($getProduct->nextPageUrl()))
+            if (!empty($getProduct->nextPageUrl())) 
             {
                 $parse_url = parse_url($getProduct->nextPageUrl());
-                if (!empty($parse_url['query']))
+                if (!empty($parse_url['query'])) 
                 {
                     parse_str($parse_url['query'], $get_array);
                     $page = !empty($get_array['page']) ? $get_array['page'] : 0;
                 }
             }
-
+            
             $data['page'] = $page;
 
             $data['getProduct'] = $getProduct;
@@ -108,13 +108,13 @@ class ProductController extends Controller
             $data['meta_title'] = $getCategory->meta_title;
             $data['meta_description'] = $getCategory->meta_description;
             $data['meta_keywords'] = $getCategory->meta_keywords;
-
+            
             $getProduct = ProductModel::getProduct($getCategory->id);
             $page = 0;
-            if (!empty($getProduct->nextPageUrl()))
+            if (!empty($getProduct->nextPageUrl())) 
             {
                 $parse_url = parse_url($getProduct->nextPageUrl());
-                if (!empty($parse_url['query']))
+                if (!empty($parse_url['query'])) 
                 {
                     parse_str($parse_url['query'], $get_array);
                     $page = !empty($get_array['page']) ? $get_array['page'] : 0;
@@ -131,24 +131,24 @@ class ProductController extends Controller
         {
             abort(404);
         }
-
+        
     }
 
     public function getFilterProductAjax(Request $request)
     {
-        $getProduct = ProductModel::getProduct();
+        $getProduct = ProductModel::getProduct();       
 
         $page = 0;
-        if (!empty($getProduct->nextPageUrl()))
+        if (!empty($getProduct->nextPageUrl())) 
         {
             $parse_url = parse_url($getProduct->nextPageUrl());
-            if (!empty($parse_url['query']))
+            if (!empty($parse_url['query'])) 
             {
                 parse_str($parse_url['query'], $get_array);
                 $page = !empty($get_array['page']) ? $get_array['page'] : 0;
             }
         }
-
+        
 
         return response()->json([
               "status"  => true,
@@ -156,6 +156,6 @@ class ProductController extends Controller
               "success" => view("product._list", [
                     "getProduct"  => $getProduct,
               ])->render(),
-        ], 200);
+        ], 200);    
     }
 }

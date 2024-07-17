@@ -5,12 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CategoryModel;
-
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
+use Auth;
+use Str;
 
 class CategoryController extends Controller
-{
+{   
     public function list()
     {
         $data['getRecord'] = CategoryModel::getRecord();
@@ -21,7 +20,7 @@ class CategoryController extends Controller
     public function add()
     {
         $data['header_title'] = 'Add New Category';
-        return view('admin.category.add', $data);
+        return view('admin.category.add', $data);   
     }
 
     public function insert(Request $request)
@@ -42,29 +41,29 @@ class CategoryController extends Controller
         $category->button_name = trim($request->button_name);
         $category->is_home = !empty($request->is_home) ? 1 : 0;
         $category->is_menu = !empty($request->is_menu) ? 1 : 0;
-
+        
 
         if(!empty($request->file('image_name')))
         {
             $file = $request->file('image_name');
-            $ext = $file->getClientOriginalExtension();
+            $ext = $file->getClientOriginalExtension();                    
             $randomStr = Str::random(20);
             $filename = strtolower($randomStr).'.'.$ext;
-            $file->move('upload/category/', $filename);
+            $file->move('upload/category/', $filename);   
             $category->image_name = trim($filename);
         }
 
         $category->save();
 
         return redirect('admin/category/list')->with('success', "Category Successfully Created");
-
+        
     }
 
     public function edit($id)
     {
         $data['getRecord'] = CategoryModel::getSingle($id);
         $data['header_title'] = 'Edit Category';
-        return view('admin.category.edit', $data);
+        return view('admin.category.edit', $data);  
     }
 
     public function update($id, Request $request)
@@ -89,10 +88,10 @@ class CategoryController extends Controller
         if(!empty($request->file('image_name')))
         {
             $file = $request->file('image_name');
-            $ext = $file->getClientOriginalExtension();
+            $ext = $file->getClientOriginalExtension();                    
             $randomStr = Str::random(20);
             $filename = strtolower($randomStr).'.'.$ext;
-            $file->move('upload/category/', $filename);
+            $file->move('upload/category/', $filename);   
             $category->image_name = trim($filename);
         }
 

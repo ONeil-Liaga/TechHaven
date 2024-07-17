@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CategoryModel;
 use App\Models\SubCategoryModel;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 
 class SubCategoryController extends Controller
 {
@@ -21,7 +21,7 @@ class SubCategoryController extends Controller
     {
         $data['getCategory'] = CategoryModel::getRecord();
         $data['header_title'] = 'Add New Sub Category';
-        return view('admin.subcategory.add', $data);
+        return view('admin.subcategory.add', $data);   
     }
 
     public function insert(Request $request)
@@ -50,11 +50,11 @@ class SubCategoryController extends Controller
         $data['getCategory'] = CategoryModel::getRecord();
         $data['getRecord'] = SubCategoryModel::getSingle($id);
         $data['header_title'] = 'Edit Sub Category';
-        return view('admin.subcategory.edit', $data);
+        return view('admin.subcategory.edit', $data);  
     }
 
     public function update($id, Request $request)
-    {
+    {       
         request()->validate([
             'slug' => 'required|unique:sub_category,slug,'.$id
         ]);
@@ -87,13 +87,13 @@ class SubCategoryController extends Controller
         $get_sub_category = SubCategoryModel::getRecordSubCategory($category_id);
         $html = '';
         $html .= '<option value="">Select</option>';
-        foreach ($get_sub_category as $value)
+        foreach ($get_sub_category as $value) 
         {
             $html .= '<option value="'.$value->id.'">'.$value->name.'</option>';
         }
 
         $json['html'] = $html;
-        echo json_encode($json);
+        echo json_encode($json);        
     }
-
+    
 }

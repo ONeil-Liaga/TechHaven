@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\NotificationModel;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
+use Hash;
+use Auth;
+use Mail;
+use Str;
 use App\Mail\RegisterMail;
 use App\Mail\ForgotPasswordMail;
 
@@ -23,7 +23,7 @@ class AuthController extends Controller
         {
             return redirect('admin/dashboard');
         }
-
+        
         return view('admin.auth.login');
     }
 
@@ -56,27 +56,27 @@ class AuthController extends Controller
             if(!empty(Auth::user()->email_verified_at))
             {
                 $json['status'] = true;
-                $json['message'] = 'success';
-            }
+                $json['message'] = 'success';        
+            }   
             else
             {
                 $save = User::getSingle(Auth::user()->id);
                 try {
                     Mail::to($save->email)->send(new RegisterMail($save));
                 } catch (\Exception $e) {
-
+                    
                 }
                 Auth::logout();
 
                 $json['status'] = false;
-                $json['message'] = 'Your account email not verified. please check your inbox and verified';
-            }
-
+                $json['message'] = 'Your account email not verified. please check your inbox and verified';        
+            }             
+            
         }
         else
         {
             $json['status'] = false;
-            $json['message'] = 'Please enter currect email and password';
+            $json['message'] = 'Please enter currect email and password';        
         }
 
         echo json_encode($json);
@@ -98,7 +98,7 @@ class AuthController extends Controller
             try {
                 Mail::to($save->email)->send(new RegisterMail($save));
             } catch (\Exception $e) {
-
+                
             }
 
             $user_id = 1;
@@ -147,10 +147,10 @@ class AuthController extends Controller
             try {
                 Mail::to($user->email)->send(new ForgotPasswordMail($user));
             } catch (\Exception $e) {
-
+                
             }
 
-            return redirect()->back()->with('success', "Please check your email and reset your password");
+            return redirect()->back()->with('success', "Please check your email and reset your password");   
         }
         else
         {
@@ -170,7 +170,7 @@ class AuthController extends Controller
         else
         {
             abort(404);
-        }
+        }    
     }
 
     public function auth_reset($token, Request $request)

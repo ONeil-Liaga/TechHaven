@@ -13,7 +13,7 @@ use App\Models\PaymentSettingModel;
 use App\Models\SMTPModel;
 
 use Auth;
-use Illuminate\Support\Str;
+use Str;
 
 class PageController extends Controller
 {
@@ -124,16 +124,16 @@ class PageController extends Controller
         }
 
 
-        if(!empty($request->file('fevicon')))
-        {
-            $file = $request->file('fevicon');
-            $ext = $file->getClientOriginalExtension();
-            $randomStr = Str::random(10);
-            $filename = strtolower($randomStr).'.'.$ext;
-            $file->move('upload/setting/', $filename);
+        // if(!empty($request->file('fevicon')))
+        // {
+        //     $file = $request->file('fevicon');
+        //     $ext = $file->getClientOriginalExtension();
+        //     $randomStr = Str::random(10);
+        //     $filename = strtolower($randomStr).'.'.$ext;
+        //     $file->move('upload/setting/', $filename);
 
-            $save->fevicon = trim($filename);
-        }
+        //     $save->fevicon = trim($filename);
+        // }
 
 
 

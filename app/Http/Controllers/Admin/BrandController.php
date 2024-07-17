@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BrandModel;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 
 class BrandController extends Controller
 {
-
+    
     public function list()
     {
         $data['getRecord'] = BrandModel::getRecord();
@@ -20,7 +20,7 @@ class BrandController extends Controller
     public function add()
     {
         $data['header_title'] = 'Add New Brand';
-        return view('admin.brand.add', $data);
+        return view('admin.brand.add', $data);   
     }
 
     public function insert(Request $request)
@@ -40,14 +40,14 @@ class BrandController extends Controller
         $brand->save();
 
         return redirect('admin/brand/list')->with('success', "Brand Successfully Created");
-
+        
     }
 
     public function edit($id)
     {
         $data['getRecord'] = BrandModel::getSingle($id);
         $data['header_title'] = 'Edit Brand';
-        return view('admin.brand.edit', $data);
+        return view('admin.brand.edit', $data);  
     }
 
 

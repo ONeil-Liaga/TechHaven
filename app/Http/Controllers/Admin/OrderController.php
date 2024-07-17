@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 use App\Models\OrderModel;
 use App\Models\NotificationModel;
 use Auth;
-use Illuminate\Support\Facades\Mail;
+use Mail;
 use App\Mail\OrderStatusMail;
 
 
 class OrderController extends Controller
-{
+{   
     public function list()
     {
         $data['getRecord'] = OrderModel::getRecord();

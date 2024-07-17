@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Hash;
 use App\Models\NotificationModel;
 use App\Models\User;
 
@@ -34,7 +34,7 @@ class AdminController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->status = $request->status;
-        $user->is_admin = 1;
+        $user->is_admin = 1;        
         $user->save();
 
         return redirect('admin/admin/list')->with('success', "Admin Successfully Created");
@@ -60,11 +60,11 @@ class AdminController extends Controller
 
         if(!empty($request->password))
         {
-            $user->password = Hash::make($request->password);
+            $user->password = Hash::make($request->password);    
         }
-
+        
         $user->status = $request->status;
-        $user->is_admin = 1;
+        $user->is_admin = 1;        
         $user->save();
 
         return redirect('admin/admin/list')->with('success', "Admin Successfully Updated");

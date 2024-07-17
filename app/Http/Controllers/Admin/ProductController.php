@@ -14,8 +14,8 @@ use App\Models\ProductSizeModel;
 use App\Models\ProductImageModel;
 
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
+use Str;
+use Auth;
 class ProductController extends Controller
 {
     public function list()
@@ -53,7 +53,7 @@ class ProductController extends Controller
             $product->slug =  $new_slug;
             $product->save();
         }
-
+        
         return redirect('admin/product/edit/'.$product->id);
     }
 
@@ -69,22 +69,22 @@ class ProductController extends Controller
             $data['getSubCategory'] = SubCategoryModel::getRecordSubCategory($product->category_id);
             $data['header_title'] = 'Edit Product';
             return view('admin.product.edit', $data);
-        }
+        }        
     }
 
     public function update($product_id, Request $request)
     {
-
+       
 
         $product = ProductModel::getSingle($product_id);
         if(!empty($product))
-        {
+        {            
             $product->title = trim($request->title);
             $product->sku = trim($request->sku);
             $product->category_id = trim($request->category_id);
             $product->sub_category_id = trim($request->sub_category_id);
             $product->brand_id = trim($request->brand_id);
-            $product->is_trendy = !empty($request->is_trendy) ? 1 : 0;
+            $product->is_trendy = !empty($request->is_trendy) ? 1 : 0;            
             $product->price = trim($request->price);
             $product->old_price = trim($request->old_price);
             $product->short_description = trim($request->short_description);
@@ -113,14 +113,14 @@ class ProductController extends Controller
             {
                 foreach($request->size as $size)
                 {
-                    if (!empty($size['name']))
+                    if (!empty($size['name'])) 
                     {
                         $saveSize = new ProductSizeModel;
                         $saveSize->name = $size['name'];
                         $saveSize->price = !empty($size['price']) ? $size['price'] : 0;
                         $saveSize->product_id = $product->id;
-                        $saveSize->save();
-                    }
+                        $saveSize->save(); 
+                    }                   
                 }
             }
 
@@ -129,9 +129,9 @@ class ProductController extends Controller
             {
                 foreach($request->file('image') as $value)
                 {
-                    if($value->isValid())
+                    if($value->isValid()) 
                     {
-                        $ext = $value->getClientOriginalExtension();
+                        $ext = $value->getClientOriginalExtension();                    
                         $randomStr = $product->id.Str::random(20);
                         $filename = strtolower($randomStr).'.'.$ext;
                         $value->move('upload/product/', $filename);
@@ -152,7 +152,7 @@ class ProductController extends Controller
         else
         {
             abort(404);
-        }
+        }        
     }
 
 

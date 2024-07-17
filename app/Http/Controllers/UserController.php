@@ -8,8 +8,8 @@ use App\Models\User;
 use App\Models\ProductWishlistModel;
 use App\Models\ProductReviewModel;
 use App\Models\NotificationModel;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Auth;
+use Hash;
 class UserController extends Controller
 {
     public function dashboard()
@@ -60,7 +60,7 @@ class UserController extends Controller
         {
             abort(404);
         }
-
+        
     }
 
     public function edit_profile()
@@ -140,20 +140,20 @@ class UserController extends Controller
             $save = new ProductWishlistModel;
             $save->product_id = $request->product_id;
             $save->user_id = Auth::user()->id;
-            $save->save();
+            $save->save(); 
 
-            $json['is_wishlist'] = 1;
+            $json['is_wishlist'] = 1;   
         }
         else
         {
             ProductWishlistModel::DeleteRecord($request->product_id, Auth::user()->id);
             $json['is_wishlist'] = 0;
         }
-
+        
         $json['status'] = true;
         echo json_encode($json);
     }
-
+    
 
     public function submit_review(Request $request)
     {

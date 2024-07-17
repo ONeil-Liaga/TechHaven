@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\BlogModel;
 use App\Models\BlogCategoryModel;
 use Auth;
-use Illuminate\Support\Str;
+use Str;
 
 class BlogController extends Controller
-{
+{   
     public function list()
     {
         $data['getRecord'] = BlogModel::getRecord();
@@ -22,7 +22,7 @@ class BlogController extends Controller
     {
         $data['getCategory'] = BlogCategoryModel::getRecordActive();
         $data['header_title'] = 'Add New Blog';
-        return view('admin.blog.add', $data);
+        return view('admin.blog.add', $data);   
     }
 
     public function insert(Request $request)
@@ -42,10 +42,10 @@ class BlogController extends Controller
         if(!empty($request->file('image_name')))
         {
             $file = $request->file('image_name');
-            $ext = $file->getClientOriginalExtension();
+            $ext = $file->getClientOriginalExtension();                    
             $randomStr = Str::random(20);
             $filename = strtolower($randomStr).'.'.$ext;
-            $file->move('upload/blog/', $filename);
+            $file->move('upload/blog/', $filename);   
             $blog->image_name = trim($filename);
         }
 
@@ -63,7 +63,7 @@ class BlogController extends Controller
         $blog->save();
 
         return redirect('admin/blog/list')->with('success', "Blog Successfully Created");
-
+        
     }
 
     public function edit($id)
@@ -71,7 +71,7 @@ class BlogController extends Controller
         $data['getCategory'] = BlogCategoryModel::getRecordActive();
         $data['getRecord'] = BlogModel::getSingle($id);
         $data['header_title'] = 'Edit Blog';
-        return view('admin.blog.edit', $data);
+        return view('admin.blog.edit', $data);  
     }
 
     public function update($id, Request $request)
@@ -96,10 +96,10 @@ class BlogController extends Controller
             }
 
             $file = $request->file('image_name');
-            $ext = $file->getClientOriginalExtension();
+            $ext = $file->getClientOriginalExtension();                    
             $randomStr = Str::random(20);
             $filename = strtolower($randomStr).'.'.$ext;
-            $file->move('upload/blog/', $filename);
+            $file->move('upload/blog/', $filename);   
             $blog->image_name = trim($filename);
             $blog->save();
         }

@@ -13,15 +13,13 @@ use App\Models\ColorModel;
 use App\Models\NotificationModel;
 use App\Models\PaymentSettingModel;
 use App\Models\User;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Hash;
+use Auth;
 use Cart;
 use Stripe\Stripe;
-
+use Session;
 use App\Mail\OrderInvoiceMail;
-
+use Mail;
 
 class PaymentController extends Controller
 {
@@ -73,7 +71,7 @@ class PaymentController extends Controller
         $data['meta_keywords'] = '';
         $data['getShipping'] = ShippingChargeModel::getRecordActive();
         $data['getPaymentSetting'] = PaymentSettingModel::getSingle();
-
+        
         return view('payment.checkout', $data);
     }
 
@@ -133,7 +131,7 @@ class PaymentController extends Controller
 
     public function update_cart(Request $request)
     {
-        foreach($request->cart as $cart)
+        foreach($request->cart as $cart) 
         {
             Cart::update($cart['id'], array(
               'quantity' => array(
@@ -145,7 +143,7 @@ class PaymentController extends Controller
         }
 
         return redirect()->back();
-
+       
     }
 
     public function place_order(Request $request)
@@ -171,10 +169,10 @@ class PaymentController extends Controller
                     $save = new User;
                     $save->name = trim($request->first_name);
                     $save->email = trim($request->email);
-     $save->password = Hash::make($request->password);
+                    $save->password = Hash::make($request->password);
                     $save->save();
 
-                    $user_id = $save->id;
+                    $user_id = $save->id; 
                 }
             }
             else
@@ -182,7 +180,7 @@ class PaymentController extends Controller
                 $user_id = '';
             }
         }
-
+        
 
         if(empty($validate))
         {
@@ -195,7 +193,7 @@ class PaymentController extends Controller
             {
                 $getDiscount = DiscountCodeModel::CheckDiscount($request->discount_code);
                 if(!empty($getDiscount))
-                {
+                {   
                     $discount_code = $request->discount_code;
                     if($getDiscount->type == 'Amount')
                     {
@@ -206,7 +204,7 @@ class PaymentController extends Controller
                     {
                         $discount_amount = ($payable_total * $getDiscount->percent_amount) / 100;
                         $payable_total = $payable_total - $discount_amount;
-                    }
+                    }    
                 }
             }
 
@@ -216,7 +214,7 @@ class PaymentController extends Controller
             $order = new OrderModel;
             if(!empty($user_id))
             {
-                $order->user_id = trim($user_id);
+                $order->user_id = trim($user_id);    
             }
             $order->order_number = mt_rand(100000000,999999999);
             $order->first_name = trim($request->first_name);
@@ -254,13 +252,13 @@ class PaymentController extends Controller
                 {
                     $getColor = ColorModel::getSingle($color_id);
 
-                    $order_item->color_name = $getColor->name;
-                }
+                    $order_item->color_name = $getColor->name;    
+                }            
 
                 $size_id = $cart->attributes->size_id;
                 if(!empty($size_id))
                 {
-                    $getSize = ProductSizeModel::getSingle($size_id);
+                    $getSize = ProductSizeModel::getSingle($size_id);    
                     $order_item->size_name = $getSize->name;
                     $order_item->size_amount = $getSize->price;
                 }
@@ -282,7 +280,7 @@ class PaymentController extends Controller
         }
 
         echo json_encode($json);
-
+        
     }
 
 
@@ -304,7 +302,7 @@ class PaymentController extends Controller
                     try {
                         Mail::to($getOrder->email)->send(new OrderInvoiceMail($getOrder));
                     } catch (\Exception $e) {
-
+                        
                     }
 
                     $user_id = 1;
@@ -319,7 +317,7 @@ class PaymentController extends Controller
                 }
                 else if($getOrder->payment_method == 'paypal')
                 {
-
+                   
                     $query                  = array();
                     $query['business']      = $getPaymentSetting->paypal_id;
                     $query['cmd']           = '_xclick';
@@ -335,15 +333,15 @@ class PaymentController extends Controller
 
                     if($getPaymentSetting->paypal_status == 'live')
                     {
-                        header('Location: https://www.paypal.com/cgi-bin/webscr?' . $query_string);
+                        header('Location: https://www.paypal.com/cgi-bin/webscr?' . $query_string);     
                     }
                     else
                     {
-                        header('Location: https://www.sandbox.paypal.com/cgi-bin/webscr?' . $query_string);
+                        header('Location: https://www.sandbox.paypal.com/cgi-bin/webscr?' . $query_string);        
                     }
-
-                    exit();
-
+                    
+                    exit();       
+                  
                 }
                 else if($getOrder->payment_method == 'stripe')
                 {
@@ -377,12 +375,12 @@ class PaymentController extends Controller
                     $data['setPublicKey'] = $getPaymentSetting->stripe_public_key;
 
                     return view('payment.stripe_charge', $data);
-
+          
                 }
             }
             else
             {
-                abort(404);
+                abort(404);    
             }
         }
         else
@@ -406,9 +404,9 @@ class PaymentController extends Controller
                 try {
                     Mail::to($getOrder->email)->send(new OrderInvoiceMail($getOrder));
                 } catch (\Exception $e) {
-
+                    
                 }
-
+                
                 $user_id = 1;
                 $url = url('admin/orders/detail/'.$getOrder->id);
                 $message = "New Order Placed #".$getOrder->order_number;
@@ -433,16 +431,16 @@ class PaymentController extends Controller
 
     public function stripe_success_payment(Request $request)
     {
-
-        $trans_id = Session::get('stripe_session_id');
+        
+        $trans_id = Session::get('stripe_session_id');    
         \Stripe\Stripe::setApiKey($getPaymentSetting->stripe_secret_key);
         $getdata = \Stripe\Checkout\Session::retrieve($trans_id);
-
+        
 
         $getOrder = OrderModel::where('stripe_session_id', '=', $getdata->id)->first();
 
 
-        if(!empty($getOrder) && !empty($getdata->id) && $getdata->id == $getOrder->stripe_session_id)
+        if(!empty($getOrder) && !empty($getdata->id) && $getdata->id == $getOrder->stripe_session_id) 
         {
             $getOrder->is_payment = 1;
             $getOrder->transaction_id = $getdata->id;
@@ -452,7 +450,7 @@ class PaymentController extends Controller
             try {
                 Mail::to($getOrder->email)->send(new OrderInvoiceMail($getOrder));
             } catch (\Exception $e) {
-
+                
             }
 
             $user_id = 1;
@@ -460,14 +458,14 @@ class PaymentController extends Controller
             $message = "New Order Placed #".$getOrder->order_number;
 
             NotificationModel::insertRecord($user_id, $url, $message);
-
+            
             Cart::clear();
 
             return redirect('cart')->with('success', "Order successfully placed");
         }
         else
         {
-            return redirect('cart')->with('error', "Due to some error please try again");
+            return redirect('cart')->with('error', "Due to some error please try again"); 
         }
     }
 }

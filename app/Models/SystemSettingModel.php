@@ -31,17 +31,17 @@ class SystemSettingModel extends Model
         }
     }
 
-    public function getFevicon()
-    {
-        if(!empty($this->fevicon) && file_exists('upload/setting/'.$this->fevicon))
-        {
-            return url('upload/setting/'.$this->fevicon);
-        }
-        else
-        {
-            return "";
-        }
-    }
+    // public function getFevicon()
+    // {
+    //     if(!empty($this->fevicon) && file_exists('upload/setting/'.$this->fevicon))
+    //     {
+    //         return url('upload/setting/'.$this->fevicon);
+    //     }
+    //     else
+    //     {
+    //         return "";
+    //     }
+    // }
 
 
     public function getFooterPayment()

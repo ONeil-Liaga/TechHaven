@@ -15,9 +15,9 @@ use App\Models\BlogCategoryModel;
 use App\Models\BlogCommentModel;
 use App\Models\HomeSettingModel;
 use App\Mail\ContactUsMail;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
+use Session;
+use Auth;
+use Mail;
 
 class HomeController extends Controller
 {
@@ -34,7 +34,7 @@ class HomeController extends Controller
         $data['getCategory'] = CategoryModel::getRecordActiveHome();
         $data['getProduct'] = ProductModel::getRecentArrival();
         $data['getProductTrendy'] = ProductModel::getProductTrendy();
-
+        
         $data['meta_title'] = $getPage->meta_title;
         $data['meta_description'] = $getPage->meta_description;
         $data['meta_keywords'] = $getPage->meta_keywords;
@@ -53,14 +53,14 @@ class HomeController extends Controller
                     "getProduct"  => $getProduct,
                     "getCategory"  => $getCategory,
               ])->render(),
-        ], 200);
+        ], 200);  
     }
 
     public function contact()
     {
         $first_numer =  mt_rand(0,9);
         $second_numer =  mt_rand(0,9);
-
+        
         $data['first_numer'] = $first_numer;
         $data['second_numer'] = $second_numer;
 
@@ -107,7 +107,7 @@ class HomeController extends Controller
         {
             return redirect()->back()->with('error', "Your verification sum is wrong.");
         }
-
+        
     }
 
     public function about()
@@ -240,7 +240,7 @@ class HomeController extends Controller
         else
         {
             abort(404);
-        }
+        }       
     }
 
     public function blog_category($slug)
@@ -263,7 +263,7 @@ class HomeController extends Controller
         else
         {
             abort(404);
-        }
+        }       
     }
 
     public function submit_blog_comment(Request $request)
@@ -277,5 +277,5 @@ class HomeController extends Controller
         return redirect()->back()->with('success', "Your comment successfully created");
     }
 
-
+    
 }
